@@ -8,11 +8,11 @@ public class Targeter : MonoBehaviour
 {
     [SerializeField] CinemachineTargetGroup _targetGroup;
     [SerializeField] CinemachineVirtualCamera _targetingCamera;
-    [SerializeField] Sprite _crosshair;
+    [SerializeField] GameObject _crosshair;
     public Target CurrentTarget { get; private set; }
     List<Target> _targets = new List<Target>();
 
-    public Sprite _currentHair;
+    public GameObject _currentHair;
     private Camera _mainCamera;
 
     private void Start()
@@ -44,7 +44,7 @@ public class Targeter : MonoBehaviour
             _targetGroup.RemoveMember(CurrentTarget.transform);
             CurrentTarget = null;
         }
-        CrosshairDeleting();
+        
         target.OnDestroyed -= RemoveTarget;
         _targets.Remove(target);
     }
@@ -87,6 +87,7 @@ public class Targeter : MonoBehaviour
         if (CurrentTarget == null) return;
         _targetingCamera.Priority = 9;
         _targetGroup.RemoveMember(CurrentTarget.transform);
+        CrosshairDeleting();
         CurrentTarget = null;
     }
 
@@ -97,7 +98,7 @@ public class Targeter : MonoBehaviour
 
     void CrosshairDeleting()
     {
-        Destroy(GameObject.Find("crosshair(Clone)"));
+        Destroy(_currentHair);
     }
 }
 
