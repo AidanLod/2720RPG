@@ -752,7 +752,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1966539066}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00045086205, y: -0.00000001720923, z: 7.758989e-12, w: 0.99999994}
+  m_LocalRotation: {x: 0.00045086135, y: 0.000000017206608, z: -7.757795e-12, w: 0.99999994}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -931,7 +931,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   animationSpeed: 1
   ikHands: {fileID: 0}
-  target: {fileID: 0}
+  target: {fileID: 1382432086659828031}
   rightWeapon: 0
   leftWeapon: 0
 --- !u!114 &1349341262566248743
