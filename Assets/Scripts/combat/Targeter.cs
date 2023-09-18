@@ -2,15 +2,17 @@ using System;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class Targeter : MonoBehaviour
 {
     [SerializeField] CinemachineTargetGroup _targetGroup;
     [SerializeField] CinemachineVirtualCamera _targetingCamera;
-    
+    [SerializeField] Sprite _crosshair;
     public Target CurrentTarget { get; private set; }
     List<Target> _targets = new List<Target>();
 
+    public Sprite _currentHair;
     private Camera _mainCamera;
 
     private void Start()
@@ -23,12 +25,15 @@ public class Targeter : MonoBehaviour
         if (!other.TryGetComponent<Target>(out Target target)) return;
         _targets.Add(target);
         target.OnDestroyed += RemoveTarget;
+        
     }
 
     void OnTriggerExit(Collider other)
     {
         if (!other.TryGetComponent<Target>(out Target target)) return;
         RemoveTarget(target);
+        
+        
     }
 
     void RemoveTarget(Target target)
@@ -39,13 +44,14 @@ public class Targeter : MonoBehaviour
             _targetGroup.RemoveMember(CurrentTarget.transform);
             CurrentTarget = null;
         }
-
+        CrosshairDeleting();
         target.OnDestroyed -= RemoveTarget;
         _targets.Remove(target);
     }
 
     public bool SelectTarget()
     {
+        
         if (_targets.Count == 0)
             return false;
         Target closestTarget = null;
@@ -72,6 +78,7 @@ public class Targeter : MonoBehaviour
         CurrentTarget = closestTarget;
         _targetGroup.AddMember(CurrentTarget.transform, 1f, 2f);
         _targetingCamera.Priority = 11;
+        CrosshairSpawning();
         return true;
     }
 
@@ -81,6 +88,16 @@ public class Targeter : MonoBehaviour
         _targetingCamera.Priority = 9;
         _targetGroup.RemoveMember(CurrentTarget.transform);
         CurrentTarget = null;
+    }
+
+    void CrosshairSpawning()
+    {
+        _currentHair = Instantiate(_crosshair);
+    }
+
+    void CrosshairDeleting()
+    {
+        Destroy(GameObject.Find("crosshair(Clone)"));
     }
 }
 
